@@ -9,7 +9,7 @@ def get_trend_pre_day(date):
     #date = "2020-02-01"
     #time_international = "18"
     the_trends_on_day = []
-    for time_international in range(0,23):
+    for time_international in range(0,24):
 #         if time_international == 15 and date == "2020-03-24":
 #             continue
         url = "https://getdaytrends.com/"+country+"/"+date+"/"+str(time_international)+"/"
@@ -30,10 +30,8 @@ def get_trend_pre_day(date):
     #the_trends.append(the_trends_without_duplicates)
 from datetime import date, timedelta
 start_date = date(2020, 3, 19)
-end_date = date(2020, 5, 20)
+end_date = date(2020, 3, 19)
 
-#start_date = date(2020, 3, 24)
-#end_date = date(2020, 3, 24)
 delta = timedelta(days=1)
 while start_date <= end_date:
     #print (start_date.strftime("%Y-%m-%d"))
