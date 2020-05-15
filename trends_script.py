@@ -1,8 +1,15 @@
 from selenium import webdriver
 import pandas as pd
 import time
+from datetime import date, timedelta
+#change the values below to get the right results.
+
+driver_link = '/Users/tomashegewisch/Downloads/chromedriver'
+start_date = date(2020, 3, 19)
+end_date = date(2020, 3, 19)
+
 #you have to change this for every computer...
-driver = webdriver.Chrome('/Users/tomashegewisch/Downloads/chromedriver')
+driver = webdriver.Chrome(driver_link)
 the_trends = []
 def get_trend_pre_day(date):
     country = "south-africa"
@@ -17,20 +24,16 @@ def get_trend_pre_day(date):
         driver.get(url)
         #time.sleep(2)
         try:
-            clicker = driver.find_elements_by_xpath('//*[@id="trends"]/div/a')[0]
-            clicker.click()
+            clicker = driver.find_elements_by_xpath('//*[@id="trends"]/div/a')[0].click()
             a = driver.find_elements_by_xpath('//*[@id="trends"]/table/tbody/tr/td/a')
             print(country+" "+str(date)+" "+str(time_international))
             for i in a:
                 the_trends.append(i.text)
-                #the_trends_on_day.append(i.text)
         except:
             print("The trends on this day and time is not Available")
-            driver = webdriver.Chrome('/Users/tomashegewisch/Downloads/chromedriver')
-    #the_trends.append(the_trends_without_duplicates)
-from datetime import date, timedelta
-start_date = date(2020, 3, 19)
-end_date = date(2020, 3, 19)
+            driver = webdriver.Chrome(driver_link)
+
+
 
 delta = timedelta(days=1)
 while start_date <= end_date:
