@@ -55,6 +55,7 @@ out = "Trends,\n"
 for i in the_trends_without_duplicates:
     out+= str(i)+",\n"
 #write the documnet
-with open("trends.csv", "w")as text_file:
+file_name = "trends: " + str(start_date) +  "-" + str(end_date) + ".csv" 
+with open(file_name, "w")as text_file:
     text_file.write(out) 
 print("file saved") 
