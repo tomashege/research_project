@@ -1,4 +1,6 @@
-requests
-os
 tqdm
-json
+nltk
+matplotlib
+spacy
+tqdm
+textstat
