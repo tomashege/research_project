@@ -4,3 +4,16 @@ matplotlib
 spacy
 tqdm
 textstat
+seaborn
+collections
+spacy
+urllib.parse
+http.client
+tqdm
+textstat
+pyLDAvis
+gensim
+wordcloud
+bs4
+iso639
+googletrans
