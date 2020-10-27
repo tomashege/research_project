@@ -5,8 +5,8 @@ from datetime import date, timedelta
 #change the values below to get the right results.
 
 driver_link = '/Users/tomashegewisch/Downloads/chromedriver'
-start_date = date(2020, 3, 19)
-end_date = date(2020, 3, 19)
+start_date = date(2020, 3, 15)
+end_date = date(2020, 7, 15)
 
 #you have to change this for every computer...
 driver = webdriver.Chrome(driver_link)
