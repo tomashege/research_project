@@ -120,5 +120,5 @@ tweets = tweets[tweets['tokenised'].apply(find_non_text) != "NA"]
 debug("After")
 debug(len(tweets))
 
-tweets.to_pickle("/Users/tomashegewisch/Desktop/May.pkl")
+tweets.to_pickle("/Users/tomashegewisch/Desktop/all.pkl")
 
