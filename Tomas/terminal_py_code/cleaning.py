@@ -15,7 +15,7 @@ from collections import Counter
 from langdetect import detect
 import seaborn as sns
 import spacy
-
+import json
 import sys
 
 # Lambda function for printing
@@ -29,7 +29,11 @@ rm_punc = str.maketrans('', '', string.punctuation)
 # Create stopword removal variable
 stopwords = sklearn.feature_extraction.text.ENGLISH_STOP_WORDS
 temp_word = set(stopwords)
-new_words_temp = [] # <- Add any additional stopwords here
+
+ # Additional stopwords 
+new_words_temp = []
+with open('/Users/tomashegewisch/research_project/Tomas/data/add_stopwords.json') as f:
+    new_words_temp = json.load(f)['stopwords']
 for i in new_words_temp:
     temp_word.add(i)
 stopwords = frozenset(temp_word)
@@ -38,13 +42,14 @@ stopwords = frozenset(temp_word)
 porter = PorterStemmer()
 lancaster = LancasterStemmer()
 
-
 # Import JSON files containing tweet dataset(s)
 path = str(sys.argv[1])
 try:
     tweets = pd.read_json(path, lines=True, orient='record')
 except:
     print("The path was not found")
+
+#tweets = tweets.head(1000)
 
 # View all rows contained in the dataset(s)
 pd.set_option('display.max_rows', tweets.shape[0]+1)
@@ -103,15 +108,18 @@ def clean_tweet(tweet):
     tweet = [x for x in tweet if len(x) > 1]
     return tweet
 
+def make_clean_text(tweet): 
+    # pre-processing package.
+    return p.clean(tweet)
 
 tweets['tokenised'] = tweets['tweet'].apply(clean_tweet)
+
+tweets['tweet_clean'] = tweets['tweet'].apply(make_clean_text)
 
 
 def find_non_text(text):
     if text == []:
         return "NA"
-
-
 
 #DROP rows that do not have text in them...
 debug("Before")
@@ -120,5 +128,4 @@ tweets = tweets[tweets['tokenised'].apply(find_non_text) != "NA"]
 debug("After")
 debug(len(tweets))
 
-tweets.to_pickle("/Users/tomashegewisch/Desktop/all.pkl")
-
+tweets.to_pickle("/Users/tomashegewisch/Desktop/all_6_months.pkl")
