@@ -42,6 +42,7 @@ stopwords = frozenset(temp_word)
 porter = PorterStemmer()
 lancaster = LancasterStemmer()
 
+debug("<<<load the data>>>")
 # Import JSON files containing tweet dataset(s)
 path = str(sys.argv[1])
 try:
@@ -54,7 +55,7 @@ except:
 # View all rows contained in the dataset(s)
 pd.set_option('display.max_rows', tweets.shape[0]+1)
 
-
+debug("<<<duplicates>>>")
 # Check for duplicate tweets
 debug("BEFORE")
 debug(len(tweets))
@@ -62,6 +63,7 @@ tweets.drop_duplicates(subset=['id'], keep="first", inplace=True)
 debug("\nAFTER")
 debug(len(tweets))
 
+debug("<<<Remove non-englisch>>>")
 # Remove all tweets which are not English
 def language(text):
     try:
@@ -112,14 +114,17 @@ def make_clean_text(tweet):
     # pre-processing package.
     return p.clean(tweet)
 
+debug("<<<First apply function>>>")
 tweets['tokenised'] = tweets['tweet'].apply(clean_tweet)
 
+debug("<<<Secound apply function>>>")
 tweets['tweet_clean'] = tweets['tweet'].apply(make_clean_text)
 
 
 def find_non_text(text):
     if text == []:
         return "NA"
+debug("<<<drop non-words>>>")
 
 #DROP rows that do not have text in them...
 debug("Before")
@@ -128,4 +133,5 @@ tweets = tweets[tweets['tokenised'].apply(find_non_text) != "NA"]
 debug("After")
 debug(len(tweets))
 
+debug("<<<send to pkl>>>")
 tweets.to_pickle("/Users/tomashegewisch/Desktop/all_6_months.pkl")
