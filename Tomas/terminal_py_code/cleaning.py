@@ -120,6 +120,9 @@ tweets['tokenised'] = tweets['tweet'].apply(clean_tweet)
 debug("<<<Secound apply function>>>")
 tweets['tweet_clean'] = tweets['tweet'].apply(make_clean_text)
 
+debug("<<Remove>>")
+
+
 
 def find_non_text(text):
     if text == []:
@@ -134,4 +137,4 @@ debug("After")
 debug(len(tweets))
 
 debug("<<<send to pkl>>>")
-tweets.to_pickle("/Users/tomashegewisch/Desktop/all_6_months.pkl")
+tweets.to_pickle("/Users/tomashegewisch/Desktop/all_6_months_2.pkl")
