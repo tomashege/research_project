@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Pair wise corrolation
+
+```{r}
+library(tidyverse)
+library(widyr)
+library(dplyr)
+
+tweets <- read_csv('/Users/tomashegewisch/Desktop/tweets_df.csv')
+tweets
+
+
+austen_section_words <- tweets %>%
+unnest_tokens(text, tweet_clean)
+
+# count words co-occuring within sections
+word_pairs <- austen_section_words %>%
+  pairwise_count(text,id, sort = FALSE)
+
+word_pairs
+
+word_cors <- austen_section_words %>%
+  group_by(text) %>%
+  filter(n() >= 20) %>%
+  pairwise_cor(text, id, sort = TRUE)
+
+
+
+word_cors %>%
+  filter(item1 %in% c("government","covid19","southafrica","lockdownsa","cyrilramaphosa","lockdown","covid19sa","coronavirussa","covid_19","lockdownsouthafrica")) %>%
+  group_by(item1) %>%
+  top_n(6) %>%
+  ungroup() %>%
+  mutate(item2 = reorder(item2, correlation)) %>%
+  ggplot(aes(item2, correlation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ item1, scales = "free") +
+  coord_flip()
+
+
+```
+
