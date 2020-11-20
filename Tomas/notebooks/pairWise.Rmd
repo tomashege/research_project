@@ -15,7 +15,7 @@ tweets
 
 
 austen_section_words <- tweets %>%
-unnest_tokens(text, new_col)
+unnest_tokens(text, tweet_clean)
 
 # count words co-occuring within sections
 word_pairs <- austen_section_words %>%
